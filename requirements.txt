@@ -1,3 +1,5 @@
-# empty for simulation (keep the file so Dockerfile doesn't fail)
+requests
+PyGithub
+
 
 
