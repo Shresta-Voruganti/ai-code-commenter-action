@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from github import Github
+from github import Github, Auth
 
 def get_pr_number_from_event():
     """Extract PR number from GitHub event JSON."""
@@ -63,7 +63,7 @@ def main():
         raise RuntimeError("❌ Missing one or more required environment variables.")
 
     # Authenticate with GitHub
-    gh = Github(github_token)
+    gh = Github(auth=Auth.Token(github_token))
     repo = gh.get_repo(repo_name)
     pr = repo.get_pull(int(pr_number))
 
