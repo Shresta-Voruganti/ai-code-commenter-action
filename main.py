@@ -15,7 +15,7 @@ def get_pr_number_from_event():
             return pr.get("number")
     return None
 
-def call_openai_review(api_key, filename, patch):
+def call_openai_review(api_key, filename, patch, retries=3):
     """Send the patch to OpenAI and get a review comment."""
     if not patch:
         return None
