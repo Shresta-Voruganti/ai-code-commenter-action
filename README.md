@@ -69,15 +69,16 @@ Each user must provide their own key as a GitHub Actions secret:
 
 ---
 
-## 🧠 Example Output
+## 🧠 Example AI Review Output
 
 Once configured, the Action will automatically comment on pull requests, like:
 
-> 🤖 **AI Review for `example.py`**
->
-> * The function multiplies two numbers and returns the product.
-> * Consider adding input validation to handle non-integer values.
-> * Use more descriptive variable names for better readability.
+🤖 **AI Review for `example.py`**  
+
+- Explains the purpose of your function.  
+- Suggests better naming and handling of edge cases.  
+- Highlights potential improvements in logic.
+
 
 ---
 
@@ -94,7 +95,7 @@ Once configured, the Action will automatically comment on pull requests, like:
 
 * ✅ Works with any language (`.py`, `.js`, `.java`, `.yml`, etc.)
 * ⚠️ If using a free OpenAI key, you might hit rate limits. Paid keys are recommended.
-* 🧪 You can adjust batching and `MAX_BLOCKS` in `main.py` for large PRs.
+* 🔳 You can adjust batching and `MAX_BLOCKS` in `main.py` for large PRs.
 
 ---
 
@@ -120,20 +121,5 @@ This project is licensed under the MIT License.
 
 ---
 
-## 📌 Summary
-
-* ✅ Users **don’t need your API key** — they add their own via `OPENAI_API_KEY`
-* ✅ Your action is ready to be **publicly shared or used privately**
-* ✅ Deployment is automatic when you push to `main`
-* ✅ Anyone can integrate it with just a few lines in their workflow
-
----
-
-### 🧪 Example Workflow Repository
-
-You can see an example of how this Action is tested here:
-👉 [test-ai-commenter-run](https://github.com/Shresta-Voruganti/test-ai-commenter-run)
-
----
 
 
