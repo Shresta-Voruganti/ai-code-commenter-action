@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run AI Code Commenter
-        uses: Shresta-Voruganti/ai-code-commenter-action@main
+        uses: Shresta-Voruganti/ai-code-commenter-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       # ✅ Required for PR access
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}   # ✅ Your OpenAI API key
