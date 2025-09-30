@@ -117,7 +117,7 @@ Contributions are welcome! If you want to improve the review logic, prompt quali
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
 
 ---
 

@@ -15,12 +15,6 @@
   #using: "docker"
   #image: "Dockerfile"
 
-# name: "AI Code Commenter"
-# description: "Starter (simulation) that prints what it would do"
-# runs:
-#   using: "docker"
-#   image: "Dockerfile"
-
 
 name: "AI Code Commenter"
 description: "Automatically reviews pull requests and adds AI-generated comments using OpenAI GPT."
