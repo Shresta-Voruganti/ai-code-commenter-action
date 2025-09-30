@@ -115,6 +115,40 @@ Contributions are welcome! If you want to improve the review logic, prompt quali
 
 ---
 
+## ⚠️ Troubleshooting
+
+If the action fails to post comments or errors occur during a pull request, the most common cause is related to the **OpenAI API key** or how it’s configured in the repository secrets.
+
+#### 🔑 1. Check the `OPENAI_API_KEY` Secret
+
+* Go to your repository → **Settings → Secrets and variables → Actions**.
+* Add a new secret named **`OPENAI_API_KEY`** and paste your OpenAI key as the value.
+* Make sure your workflow references it correctly:
+
+  ```yaml
+  env:
+    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  ```
+
+#### 🚫 2. 429 “Too Many Requests” Error
+
+* This means your OpenAI key has hit its **rate limit** (very common with free-tier keys).
+* Wait a few minutes and try again, or switch to a **paid key** for more stable results.
+
+#### 🔄 3. Regenerate Your Key
+
+* If your key is old, unused, or revoked, generate a **new one** at [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
+
+#### 🧪 4. Still Not Working?
+
+* Double-check that the secret name is **exactly** `OPENAI_API_KEY`.
+* Ensure the GitHub Action has permission to read secrets (default: ✅).
+* Check the **Actions → Workflow logs** in your repo for more detailed error messages.
+
+💡 **Tip:** Over 90% of issues are resolved by fixing the API key setup or switching from a free to a paid key.
+
+---
+
 ## 📜 License
 
 This project is licensed under the **MIT License**.
