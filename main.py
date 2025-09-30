@@ -92,16 +92,43 @@ def main():
     files = list(pr.get_files())
     print(f"Found {len(files)} changed files.")
 
-    for i, f in enumerate(files[:max_blocks]):
-        print(f"🧠 Processing file {i+1}: {f.filename}")
-        review_comment = call_openai_review(openai_key, f.filename, f.patch)
+    # for i, f in enumerate(files[:max_blocks]):
+#     print(f"🧠 Processing file {i+1}: {f.filename}")
+#     review_comment = call_openai_review(openai_key, f.filename, f.patch)
+    
+#     if review_comment:
+#         body = f"**🤖 AI Review for `{f.filename}`:**\n\n{review_comment}"
+#         pr.create_issue_comment(body) 
+#         print(f"✅ Posted comment for {f.filename}")
+#     else:
+#         print(f"⚠️ No comment generated for {f.filename}")
 
-        if review_comment:
-            body = f"**🤖 AI Review for `{f.filename}`:**\n\n{review_comment}"
-            pr.create_issue_comment(body)
-            print(f"✅ Posted comment for {f.filename}")
-        else:
-            print(f"⚠️ No comment generated for {f.filename}")
+
+	# ✅ Batching logic starts here
+	batch_size = 2  # process 2 files per batch
+	pause_between_batches = 15  # wait 15s between batches
+	total_files = files[:max_blocks]
+
+	for start in range(0, len(total_files), batch_size):
+    	   batch = total_files[start:start + batch_size]
+           print(f"📦 Processing batch {start // batch_size + 1} ({len(batch)} files)...")
+
+    	for i, f in enumerate(batch, start=start + 1):
+           print(f"🧠 Processing file {i}: {f.filename}")
+           review_comment = call_openai_review(openai_key, f.filename, f.patch)
+    
+           if review_comment:
+               body = f"**🤖 AI Review for `{f.filename}`:**\n\n{review_comment}"
+               pr.create_issue_comment(body) 
+               print(f"✅ Posted comment for {f.filename}")
+           else:
+               print(f"⚠️ No comment generated for {f.filename}")
+
+    # 💤 Wait between batches to avoid hitting OpenAI rate limit
+    	if start + batch_size < len(total_files):
+           print(f"⏳ Waiting {pause_between_batches}s before next batch...")
+           time.sleep(pause_between_batches)
+
 
     print("🎉 All done — AI comments have been posted on the PR!")
 
