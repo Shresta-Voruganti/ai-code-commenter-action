@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import requests
 from github import Github, Auth
 
@@ -37,10 +38,30 @@ Code diff:
         "max_tokens": 400,
         "temperature": 0.2
     }
+    
+    # ✅ New: Retry loop to handle 429 Too Many Requests
+    for attempt in range(retries):
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers=headers,
+            json=data
+        )
 
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
-    response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"].strip()
+        if response.status_code == 429:
+            wait_time = (attempt + 1) * 10
+            print(f"⚠️ Rate limited by OpenAI. Waiting {wait_time}s before retry {attempt + 1}/{retries}...")
+            time.sleep(wait_time)
+            continue
+
+        response.raise_for_status()
+        return response.json()["choices"][0]["message"]["content"].strip()
+
+    # ❌ If still failing after all retries:
+    raise Exception("❌ OpenAI API failed after multiple retries due to rate limits.")
+
+   # response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
+   # response.raise_for_status()
+   # return response.json()["choices"][0]["message"]["content"].strip()
 
 def main():
     print("=== 🤖 AI Code Commenter (Real Mode) ===")
