@@ -104,7 +104,7 @@ def main():
             if review_comment:
                 body = f"**🤖 AI Review for `{f.filename}`:**\n\n{review_comment}"
                 pr.create_issue_comment(body)
-                print(f"✅ Posted comment for {f.filename}")
+                print(f"Posted comment for {f.filename}")
             else:
                 print(f"⚠️ No comment generated for {f.filename}")
 
