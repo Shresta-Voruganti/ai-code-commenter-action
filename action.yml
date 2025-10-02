@@ -1,29 +1,24 @@
-#name: "AI Code Commenter"
-#description: "A GitHub Action that comments on code logic using OpenAI GPT API."
-#author: "Your Name"
-
-#inputs:
- # openai_api_key:
-  #  description: 'OpenAI API Key'
-   # required: true
-  #max_blocks:
-     #description: 'Maximum number of code blocks to comment per run'
-     #required: false
-     #default: 5
-
-#runs:
-  #using: "docker"
-  #image: "Dockerfile"
-
-
 name: "AI Code Commenter"
 description: "Automatically reviews pull requests and adds AI-generated comments using OpenAI GPT."
 author: "Shresta Voruganti"
 
+inputs:
+  openai_api_key:
+    description: "Your OpenAI API key"
+    required: true
+  max_blocks:
+    description: "Maximum number of files to review"
+    required: false
+    default: "5"
+
 runs:
   using: "docker"
   image: "Dockerfile"
+  env:
+    OPENAI_API_KEY: ${{ inputs.openai_api_key }}
+    MAX_BLOCKS: ${{ inputs.max_blocks }}
 
 branding:
   icon: "message-square"
   color: "blue"
+
