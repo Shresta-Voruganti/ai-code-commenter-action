@@ -86,9 +86,13 @@ def main():
 
     print("📂 Fetching changed files...")
     files = list(pr.get_files())
-    print(f"Found {len(files)} changed files.")
 
-    # ✅ Batching logic starts here
+    # ✅ Filter only code files
+    allowed_extensions = (".py", ".js", ".ts", ".java", ".cpp", ".c", ".go", ".rb", ".php")
+    files = [f for f in files if f.filename.endswith(allowed_extensions)]
+    print(f"Found {len(files)} code files to review after filtering.")
+
+    # ✅ Batching logic
     batch_size = 2  # process 2 files per batch
     pause_between_batches = 15  # wait 15s between batches
     total_files = files[:max_blocks]
@@ -104,7 +108,7 @@ def main():
             if review_comment:
                 body = f"**🤖 AI Review for `{f.filename}`:**\n\n{review_comment}"
                 pr.create_issue_comment(body)
-                print(f"Posted comment for {f.filename}")
+                print(f"✅ Posted comment for {f.filename}")
             else:
                 print(f"⚠️ No comment generated for {f.filename}")
 
